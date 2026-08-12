@@ -1,0 +1,43 @@
+====================================================================
+              		SPL QUERIES
+====================================================================
+
+1. Total Security Events Counter:
+index=* sourcetype=WinEventLog:Security
+| stats count
+
+2. Successful Logins Count (Event Code 4624):
+index=* sourcetype=WinEventLog:Security EventCode=4624 
+| stats count
+
+3. Failed Logins Count (Event Code 4625):
+index=* sourcetype=WinEventLog:Security EventCode=4625
+| stats count
+
+4. Security Events Over Time (Hourly Trend):
+index=* sourcetype=WinEventLog:Security
+| timechart span=1h count
+
+5. Top 10 Security Event IDs:
+index=* sourcetype=WinEventLog:Security
+| stats count by EventCode
+| sort -count
+| head 10
+
+6. Top 10 Logged-in Accounts:
+index=* sourcetype=WinEventLog:Security EventCode=4624
+| top Account_Name limit=10
+
+7. Top 10 Monitored Hosts:
+index=* sourcetype=WinEventLog:Security
+| top host limit=10
+
+8. Logon Types Distribution:
+index=* sourcetype=WinEventLog:Security EventCode=4624
+| stats count by Logon_Type
+
+9. Logon Activity Trend Over Time by User:
+index=* EventCode=4624 
+| timechart count by TargetUserName
+
+====================================================================

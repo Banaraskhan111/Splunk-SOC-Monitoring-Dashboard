@@ -1,0 +1,559 @@
+{
+  "dataSources": {
+    "ds_dHwJ7hJy": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security EventCode=4624\r\n| stats count by Logon_Type",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Logon Types search"
+    },
+    "ds_eLMDMgOD": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* EventCode=4624 | timechart count by TargetUserName",
+        "queryParameters": {
+          "earliest": "$global_time.earliest$",
+          "latest": "$global_time.latest$",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Failed Login Trend search 2"
+    },
+    "ds_mhlzJJ2x": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security EventCode=4625\r\n| timechart span=1h count",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Failed Login Trend search"
+    },
+    "ds_whJDCWiL": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security\r\n| top host limit=10",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Top Hosts search"
+    },
+    "ds_jR6iAGjx": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security EventCode=4624\r\n| top Account_Name limit=10",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Top 10 Logged-in Users search"
+    },
+    "ds_lcV5SKy5": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security\r\n| stats count by EventCode\r\n| sort -count\r\n| head 10",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Top 10 Security Event IDs search"
+    },
+    "ds_IUADmFas": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security\r\n| timechart span=1h count",
+        "queryParameters": {
+          "earliest": "-24h@h",
+          "latest": "now",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Security Events Over Time search"
+    },
+    "ds_TDwg3P8d": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security EventCode=4625\r\n| stats count",
+        "queryParameters": {
+          "earliest": "0",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Failed Logins search"
+    },
+    "ds_HwCcYtTm": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security EventCode=4624 | stats count",
+        "queryParameters": {
+          "earliest": "0",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Successful Logins search"
+    },
+    "ds_2Qeb9qEE": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=* sourcetype=WinEventLog:Security\r\n| stats count",
+        "queryParameters": {
+          "earliest": "0",
+          "sampleRatio": 1
+        }
+      },
+      "name": "Total Security Events search"
+    }
+  },
+  "visualizations": {
+    "viz_JVu0k2RI": {
+      "type": "splunk.column",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisLabelRotation": 0,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "showOverlayY2Axis": false,
+        "y2AxisScale": "linear",
+        "dataValuesDisplay": "off",
+        "stackMode": "auto",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendDisplay": "right"
+      },
+      "dataSources": {
+        "primary": "ds_dHwJ7hJy"
+      },
+      "title": "Logon Types"
+    },
+    "viz_9thmgtlo": {
+      "type": "splunk.area",
+      "dataSources": {
+        "primary": "ds_eLMDMgOD"
+      },
+      "title": "Logon Activity Trend",
+      "containerOptions": {
+        "visibility": {
+          "hideWhenNoData": true
+        }
+      },
+      "showProgressBar": true,
+      "showLastUpdated": false,
+      "options": {},
+      "context": {}
+    },
+    "viz_H7gChF6q": {
+      "type": "splunk.pie",
+      "options": {
+        "collapseThreshold": 0.01,
+        "seriesColors": [
+          "#7B56DB",
+          "#009CEB",
+          "#00CDAF",
+          "#DD9900",
+          "#FF677B",
+          "#CB2196",
+          "#813193",
+          "#0051b5",
+          "#008C80",
+          "#99B100",
+          "#FFA476",
+          "#FF6ACE",
+          "#AE8CFF",
+          "#00689D",
+          "#00490A",
+          "#465D00",
+          "#9D6300",
+          "#F6540B",
+          "#FF969E",
+          "#E47BFE"
+        ]
+      },
+      "dataSources": {
+        "primary": "ds_whJDCWiL"
+      },
+      "title": "Top Hosts"
+    },
+    "viz_CdXad8kS": {
+      "type": "splunk.column",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisLabelRotation": 0,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "showOverlayY2Axis": false,
+        "y2AxisScale": "linear",
+        "dataValuesDisplay": "off",
+        "stackMode": "auto",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendDisplay": "right"
+      },
+      "dataSources": {
+        "primary": "ds_jR6iAGjx"
+      },
+      "title": "Top 10 Logged-in Users"
+    },
+    "viz_0nZeoEX6": {
+      "type": "splunk.bar",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "dataValuesDisplay": "off",
+        "stackMode": "auto",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendDisplay": "right"
+      },
+      "dataSources": {
+        "primary": "ds_lcV5SKy5"
+      },
+      "title": "Top 10 Security Event IDs",
+      "containerOptions": {
+        "title": {
+          "color": "#f8be44"
+        },
+        "description": {
+          "color": "#0877a6"
+        }
+      }
+    },
+    "viz_NCCmXpEQ": {
+      "type": "splunk.line",
+      "options": {
+        "yAxisAbbreviation": "auto",
+        "y2AxisAbbreviation": "auto",
+        "showRoundedY2AxisLabels": false,
+        "legendTruncation": "ellipsisMiddle",
+        "showY2MajorGridLines": true,
+        "xAxisLabelRotation": 0,
+        "xAxisTitleVisibility": "show",
+        "yAxisTitleVisibility": "show",
+        "y2AxisTitleVisibility": "show",
+        "yAxisScale": "linear",
+        "showOverlayY2Axis": false,
+        "y2AxisScale": "linear",
+        "nullValueDisplay": "gaps",
+        "dataValuesDisplay": "off",
+        "showSplitSeries": false,
+        "showIndependentYRanges": false,
+        "legendMode": "standard",
+        "legendDisplay": "right",
+        "lineWidth": 2
+      },
+      "dataSources": {
+        "primary": "ds_IUADmFas"
+      },
+      "title": "Security Events Over Time"
+    },
+    "viz_PETncaGb": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_TDwg3P8d"
+      },
+      "title": "Failed Logins",
+      "containerOptions": {},
+      "showProgressBar": true,
+      "showLastUpdated": false,
+      "options": {
+        "majorColor": "#dc4e41",
+        "trendColor": "#dc4e41"
+      }
+    },
+    "viz_yoSLKTSv": {
+      "type": "splunk.singlevalue",
+      "options": {
+        "numberPrecision": 0,
+        "sparklineDisplay": "below",
+        "trendDisplay": "absolute",
+        "unitPosition": "after",
+        "shouldUseThousandSeparators": true,
+        "majorColor": "#53a051",
+        "trendColor": "#53a051"
+      },
+      "context": {
+        "convertedColorRange": [
+          {
+            "from": 100,
+            "value": "#dc4e41"
+          },
+          {
+            "from": 70,
+            "to": 100,
+            "value": "#f1813f"
+          },
+          {
+            "from": 30,
+            "to": 70,
+            "value": "#f8be34"
+          },
+          {
+            "from": 0,
+            "to": 30,
+            "value": "#0877a6"
+          },
+          {
+            "to": 0,
+            "value": "#53a051"
+          }
+        ]
+      },
+      "dataSources": {
+        "primary": "ds_HwCcYtTm"
+      },
+      "title": "Successful Logins"
+    },
+    "viz_1i8kZG59": {
+      "type": "splunk.singlevalue",
+      "options": {
+        "numberPrecision": 0,
+        "sparklineDisplay": "below",
+        "trendDisplay": "absolute",
+        "unitPosition": "after",
+        "shouldUseThousandSeparators": true,
+        "majorColor": "#ffffff"
+      },
+      "context": {
+        "convertedColorRange": [
+          {
+            "from": 100,
+            "value": "#dc4e41"
+          },
+          {
+            "from": 70,
+            "to": 100,
+            "value": "#f1813f"
+          },
+          {
+            "from": 30,
+            "to": 70,
+            "value": "#f8be34"
+          },
+          {
+            "from": 0,
+            "to": 30,
+            "value": "#0877a6"
+          },
+          {
+            "to": 0,
+            "value": "#53a051"
+          }
+        ]
+      },
+      "dataSources": {
+        "primary": "ds_2Qeb9qEE"
+      },
+      "title": "Total Security Events"
+    }
+  },
+  "applicationProperties": {
+    "collapseNavigation": true
+  },
+  "inputs": {
+    "input_global_trp": {
+      "type": "input.timerange",
+      "options": {
+        "token": "global_time",
+        "defaultValue": "-24h@h,now"
+      },
+      "title": "Global Time Range"
+    },
+    "input_GHep7JDx": {
+      "options": {
+        "items": [
+          {
+            "label": "All",
+            "value": "*"
+          },
+          {
+            "label": "host",
+            "value": "host"
+          },
+          {
+            "label": "Item 2",
+            "value": "item002"
+          }
+        ],
+        "defaultValue": "*",
+        "token": "host_tok"
+      },
+      "title": "Host",
+      "type": "input.dropdown"
+    }
+  },
+  "layout": {
+    "options": {},
+    "globalInputs": [
+      "input_global_trp",
+      "input_GHep7JDx"
+    ],
+    "tabs": {
+      "items": [
+        {
+          "layoutId": "layout_1",
+          "label": "New tab"
+        }
+      ]
+    },
+    "layoutDefinitions": {
+      "layout_1": {
+        "type": "absolute",
+        "structure": [
+          {
+            "item": "viz_1i8kZG59",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 190
+            }
+          },
+          {
+            "item": "viz_yoSLKTSv",
+            "type": "block",
+            "position": {
+              "x": -10,
+              "y": 190,
+              "w": 820,
+              "h": 220
+            }
+          },
+          {
+            "item": "viz_PETncaGb",
+            "type": "block",
+            "position": {
+              "x": 810,
+              "y": 190,
+              "w": 630,
+              "h": 220
+            }
+          },
+          {
+            "item": "viz_NCCmXpEQ",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 410,
+              "w": 1440,
+              "h": 400
+            }
+          },
+          {
+            "item": "viz_0nZeoEX6",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 810,
+              "w": 1440,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_CdXad8kS",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 1100,
+              "w": 950,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_H7gChF6q",
+            "type": "block",
+            "position": {
+              "x": 950,
+              "y": 1100,
+              "w": 490,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_9thmgtlo",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 1700,
+              "w": 1440,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_JVu0k2RI",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 1400,
+              "w": 1440,
+              "h": 300
+            }
+          }
+        ],
+        "options": {
+          "width": 1440,
+          "height": 2000
+        }
+      }
+    }
+  },
+  "title": "SOC Monitoring Dashboard",
+  "description": "",
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      },
+      "ds.spl2": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    },
+    "visualizations": {
+      "global": {
+        "showProgressBar": true
+      }
+    }
+  }
+}
