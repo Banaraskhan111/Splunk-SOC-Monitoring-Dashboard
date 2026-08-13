@@ -1,4 +1,3 @@
-Markdown
 ![Splunk](https://img.shields.io/badge/Tool-Splunk_Enterprise-black?style=for-the-badge&logo=splunk)
 ![Focus](https://img.shields.io/badge/Focus-SIEM_%26_SOC_Monitoring-blue?style=for-the-badge)
 ![OS](https://img.shields.io/badge/OS-Windows_Security_Logs-0078D4?style=for-the-badge&logo=windows)
